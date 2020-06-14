@@ -38,7 +38,7 @@ export default class extends Component {
                         <Text
                             style = {{
                                 color: 'white',
-                                fontSize: 24,
+                                fontSize: 26,
                                 fontWeight: 'bold'
                             }}
                         >
@@ -54,11 +54,9 @@ export default class extends Component {
                         <DataContext.Consumer>
                             {
                                 ({countries}) => this.getAllRegions(countries).map(region => {
-                                    let regionName = region != '' ? region : 'Other'
-                    
                                     return (
                                         <TouchableOpacity
-                                            key = {regionName}
+                                            key = {region}
                                             onPress = {() => this.props.navigation.navigate('Countries', {pickedRegion: region})}
                                             style = {{
                                                 borderBottomWidth: 1,
@@ -71,7 +69,7 @@ export default class extends Component {
                                                     fontSize: 18
                                                 }}
                                             >
-                                                {regionName}
+                                                {region}
                                             </Text>
                                         </TouchableOpacity>
                                     )
@@ -85,9 +83,19 @@ export default class extends Component {
     }
 
     getAllRegions(countries) {
-        const allRegionsFromCountries = countries.map(({region}) => region)
-        const allRegionsWithoutDuplicate = [...new Set(allRegionsFromCountries)]
+        let allRegions = []
 
-        return allRegionsWithoutDuplicate
+        if(countries.length > 0) {
+            const allRegionsFromCountries = countries.map(({region}) => region)
+
+            const allRegionsWithoutDuplicate = [...new Set(allRegionsFromCountries)]
+
+            allRegionsWithoutDuplicate.sort()
+            allRegionsWithoutDuplicate.push(allRegionsWithoutDuplicate.splice(allRegionsWithoutDuplicate.indexOf('Other'), 1)[0])
+        
+            allRegions = allRegionsWithoutDuplicate
+        }
+
+        return allRegions
     }
 }

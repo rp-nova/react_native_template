@@ -56,11 +56,11 @@ export default class extends Component {
                         <Text
                             style = {{
                                 color: 'white',
-                                fontSize: 24,
+                                fontSize: 26,
                                 fontWeight: 'bold'
                             }}
                         >
-                            {this.pickedRegion != '' ? this.pickedRegion : 'Other'}
+                            {this.pickedRegion}
                         </Text>
                     </View>
 

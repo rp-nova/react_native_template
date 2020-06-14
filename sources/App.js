@@ -35,6 +35,13 @@ export default class extends Component {
     loadAllCountries() {
         fetch(`${BASE_URL}/all`)
         .then(res => res.json())
-        .then(resJson => this.setState({countries: resJson}))
+        .then(resJson => {
+			const countries = resJson.map(country => ({
+				...country,
+				region: country['region'] != '' ? country['region'] : 'Other'
+			}))
+
+			this.setState({countries})
+		})
     }
 }
