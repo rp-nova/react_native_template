@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { Platform, SafeAreaView, ScrollView, StatusBar, Text, TouchableOpacity, View } from 'react-native'
 
 import { DataContext } from '../refs/contexts'
 
@@ -8,6 +8,12 @@ import { MAIN_COLOR } from '../refs/constants'
 
 export default class extends Component {
     pickedRegion = this.props.route.params['pickedRegion']
+
+    componentDidMount() {
+        if(Platform.OS == 'android') {
+            StatusBar.setBackgroundColor(MAIN_COLOR)
+        }
+    }
 
     render() {
         return (
@@ -64,7 +70,7 @@ export default class extends Component {
                 return (
                     <TouchableOpacity
                         key = {item['name']}
-                        onPress = {() => console.log(item['name'])}
+                        onPress = {() => alert(`You are selecting "${item['name']}"`)}
                         style = {{
                             borderBottomWidth: 1,
                             borderColor: 'lightgray',
