@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 
-import Main from '../screens/Main'
+import BottomTabNavigator from './BottomTabNavigator'
+import SecondScreen from '../screens/Second'
 
 export default class extends Component {
 	Stack = createStackNavigator()
@@ -18,8 +19,16 @@ export default class extends Component {
 				}}
 			>
 				<Stack.Screen
-					component = {Main}
-					name = 'Main'
+					component = {BottomTabNavigator}
+					name = 'BottomTab'
+				/>
+
+				<Stack.Screen
+					component = {SecondScreen}
+					name = 'Second'
+					options = {{
+						//...TransitionPresets.SlideFromRightIOS //Transisi bisa ditentukan per screen
+					}}
 				/>
 			</Stack.Navigator>
 		)
