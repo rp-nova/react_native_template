@@ -71,27 +71,32 @@ export default class extends Component {
                     >
                         <DataContext.Consumer>
                             {
-                                ({countries}) => countries.filter(item => item['region'] == this.pickedRegion).sort((a,b) => (a['name'] > b['name']) ? 1 : ((b['name'] > a['name']) ? -1 : 0)).map(item => {
-                                    return (
-                                        <TouchableOpacity
-                                            key = {item['name']}
-                                            onPress = {() => alert(`You are selecting "${item['name']}"`)}
-                                            style = {{
-                                                borderBottomWidth: 1,
-                                                borderColor: 'lightgray',
-                                                paddingVertical: 5
-                                            }}
-                                        >
-                                            <Text
+                                ({countries}) => {
+                                    countries = countries.filter(country => country['region'] == this.pickedRegion)
+                                    countries.sort((a,b) => (a['name'] > b['name']) ? 1 : ((b['name'] > a['name']) ? -1 : 0))
+
+                                    return countries.map(country => {
+                                        return (
+                                            <TouchableOpacity
+                                                key = {country['name']}
+                                                onPress = {() => alert(`You are selecting "${country['name']}"`)}
                                                 style = {{
-                                                    fontSize: 18
+                                                    borderBottomWidth: 1,
+                                                    borderColor: 'lightgray',
+                                                    paddingVertical: 5
                                                 }}
                                             >
-                                                {item['name']}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    )
-                                })
+                                                <Text
+                                                    style = {{
+                                                        fontSize: 18
+                                                    }}
+                                                >
+                                                    {country['name']}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                }
                             }
                         </DataContext.Consumer>
                     </ScrollView>
