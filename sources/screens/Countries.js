@@ -31,38 +31,7 @@ export default class extends Component {
                         flex: 1
                     }}
                 >
-                    <View
-                        style = {{
-                            alignItems: 'center',
-                            backgroundColor: MAIN_COLOR,
-                            flexDirection: 'row',
-                            height: 60,
-                            paddingHorizontal: 20
-                        }}
-                    >
-                        <TouchableOpacity
-                            onPress = {() => this.props.navigation.goBack()}
-                            style = {{
-                                marginRight: 10
-                            }}
-                        >
-                            <AntDesign
-                                color = 'white'
-                                name = 'arrowleft'
-                                size = {30}
-                            />
-                        </TouchableOpacity>
-
-                        <Text
-                            style = {{
-                                color: 'white',
-                                fontSize: 26,
-                                fontWeight: 'bold'
-                            }}
-                        >
-                            {this.pickedRegion}
-                        </Text>
-                    </View>
+                    {this.showTopBarUI()}
 
                     <ScrollView
                         contentContainerStyle = {{
@@ -71,37 +40,78 @@ export default class extends Component {
                     >
                         <DataContext.Consumer>
                             {
-                                ({countries}) => {
-                                    countries = countries.filter(country => country['region'] == this.pickedRegion)
-                                    countries.sort((a,b) => (a['name'] > b['name']) ? 1 : ((b['name'] > a['name']) ? -1 : 0))
-
-                                    return countries.map(country => {
-                                        return (
-                                            <TouchableOpacity
-                                                key = {country['name']}
-                                                onPress = {() => alert(`You are selecting "${country['name']}"`)}
-                                                style = {{
-                                                    borderBottomWidth: 1,
-                                                    borderColor: 'lightgray',
-                                                    paddingVertical: 5
-                                                }}
-                                            >
-                                                <Text
-                                                    style = {{
-                                                        fontSize: 18
-                                                    }}
-                                                >
-                                                    {country['name']}
-                                                </Text>
-                                            </TouchableOpacity>
-                                        )
-                                    })
-                                }
+                                ({countries}) => this.showCountriesListUI(countries)
                             }
                         </DataContext.Consumer>
                     </ScrollView>
                 </View>
             </SafeAreaView>
+        )
+    }
+
+    showTopBarUI() {
+        return (
+            <View
+                style = {{
+                    alignItems: 'center',
+                    backgroundColor: MAIN_COLOR,
+                    flexDirection: 'row',
+                    height: 60,
+                    paddingHorizontal: 20
+                }}
+            >
+                <TouchableOpacity
+                    onPress = {() => this.props.navigation.goBack()}
+                    style = {{
+                        marginRight: 10
+                    }}
+                >
+                    <AntDesign
+                        color = 'white'
+                        name = 'arrowleft'
+                        size = {30}
+                    />
+                </TouchableOpacity>
+
+                <Text
+                    style = {{
+                        color: 'white',
+                        fontSize: 26,
+                        fontWeight: 'bold'
+                    }}
+                >
+                    {this.pickedRegion}
+                </Text>
+            </View>
+        )
+    }
+
+    showCountriesListUI(countries) {
+        countries = countries.filter(country => country['region'] == this.pickedRegion)
+        countries.sort((a,b) => (a['name'] > b['name']) ? 1 : ((b['name'] > a['name']) ? -1 : 0))
+
+        return countries.map(country => this.showCountriesListItemUI(country))
+    }
+
+    showCountriesListItemUI(country) {
+        return (
+            <TouchableOpacity
+                key = {country['name']}
+                onPress = {() => alert(`You are selecting "${country['name']}"`)}
+                style = {{
+                    borderBottomWidth: 1,
+                    borderColor: 'lightgray',
+                    paddingVertical: 5
+                }}
+            >
+                <Text
+                    style = {{
+                        fontSize: 18
+                    }}
+                >
+                    {country['name']}
+                </Text>
+            </TouchableOpacity>
         )
     }
 }
