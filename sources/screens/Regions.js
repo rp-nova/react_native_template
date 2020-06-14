@@ -52,7 +52,31 @@ export default class extends Component {
                         }}
                     >
                         <DataContext.Consumer>
-                            {contextData => this.getRegionsListUI(contextData['countries'])}
+                            {
+                                ({countries}) => this.getAllRegions(countries).map(region => {
+                                    let regionName = region != '' ? region : 'Other'
+                    
+                                    return (
+                                        <TouchableOpacity
+                                            key = {regionName}
+                                            onPress = {() => this.props.navigation.navigate('Countries', {pickedRegion: region})}
+                                            style = {{
+                                                borderBottomWidth: 1,
+                                                borderColor: 'lightgray',
+                                                paddingVertical: 5
+                                            }}
+                                        >
+                                            <Text
+                                                style = {{
+                                                    fontSize: 18
+                                                }}
+                                            >
+                                                {regionName}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    )
+                                })
+                            }
                         </DataContext.Consumer>
                     </ScrollView>
                 </View>
@@ -61,44 +85,9 @@ export default class extends Component {
     }
 
     getAllRegions(countries) {
-        let regions = []
+        const allRegionsFromCountries = countries.map(({region}) => region)
+        const allRegionsWithoutDuplicate = [...new Set(allRegionsFromCountries)]
 
-        for(const country of countries) {
-            let regionName = country['region']
-
-            if(!regions.includes(regionName)) {
-                regions.push(regionName)
-            }
-        }
-
-        return regions
-    }
-
-    getRegionsListUI(countries) {
-        return (
-            this.getAllRegions(countries).map(item => {
-                let regionName = item != '' ? item : 'Other'
-
-                return (
-                    <TouchableOpacity
-                        key = {regionName}
-                        onPress = {() => this.props.navigation.navigate('Countries', {pickedRegion: item})}
-                        style = {{
-                            borderBottomWidth: 1,
-                            borderColor: 'lightgray',
-                            paddingVertical: 5
-                        }}
-                    >
-                        <Text
-                            style = {{
-                                fontSize: 18
-                            }}
-                        >
-                            {regionName}
-                        </Text>
-                    </TouchableOpacity>
-                )
-            })
-        )
+        return allRegionsWithoutDuplicate
     }
 }

@@ -55,38 +55,32 @@ export default class extends Component {
                     >
                         <DataContext.Consumer>
                             {
-                                contextData => this.getCountriesListUI(contextData['countries'])
+                                ({countries}) => countries.filter(item => item['region'] == this.pickedRegion).map(item => {
+                                    return (
+                                        <TouchableOpacity
+                                            key = {item['name']}
+                                            onPress = {() => alert(`You are selecting "${item['name']}"`)}
+                                            style = {{
+                                                borderBottomWidth: 1,
+                                                borderColor: 'lightgray',
+                                                paddingVertical: 5
+                                            }}
+                                        >
+                                            <Text
+                                                style = {{
+                                                    fontSize: 18
+                                                }}
+                                            >
+                                                {item['name']}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    )
+                                })
                             }
                         </DataContext.Consumer>
                     </ScrollView>
                 </View>
             </SafeAreaView>
         )
-    }
-
-    getCountriesListUI(countries) {
-        return (
-            countries.filter(item => item['region'] == this.pickedRegion).map(item => {
-                return (
-                    <TouchableOpacity
-                        key = {item['name']}
-                        onPress = {() => alert(`You are selecting "${item['name']}"`)}
-                        style = {{
-                            borderBottomWidth: 1,
-                            borderColor: 'lightgray',
-                            paddingVertical: 5
-                        }}
-                    >
-                        <Text
-                            style = {{
-                                fontSize: 18
-                            }}
-                        >
-                            {item['name']}
-                        </Text>
-                    </TouchableOpacity>
-                )
-            }
-        ))
     }
 }
