@@ -71,7 +71,7 @@ export default class extends Component {
                     >
                         <DataContext.Consumer>
                             {
-                                ({countries}) => countries.filter(item => item['region'] == this.pickedRegion).map(item => {
+                                ({countries}) => countries.filter(item => item['region'] == this.pickedRegion).sort((a,b) => (a['name'] > b['name']) ? 1 : ((b['name'] > a['name']) ? -1 : 0)).map(item => {
                                     return (
                                         <TouchableOpacity
                                             key = {item['name']}
