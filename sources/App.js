@@ -6,23 +6,35 @@ import StackNavigator from './navigators/StackNavigator'
 
 import { DataContext } from './refs/contexts'
 
+import { BASE_URL }  from './refs/constants'
+
 export default class extends Component {
 	state = {
-		number: 0
-	}
+		countries: []
+    }
+    
+    componentDidMount() {
+        this.loadAllCountries()
+    }
 
 	render() {
 		return (
 			<NavigationContainer>
 				<DataContext.Provider
 					value = {{
-						number: this.state.number,
-						setNumber: number => this.setState({number})
+						countries: this.state.countries,
+						setCountries: countries => this.setState({countries})
 					}}
 				>
 					<StackNavigator />
 				</DataContext.Provider>
 			</NavigationContainer>
 		)
-	}
+    }
+    
+    loadAllCountries() {
+        fetch(`${BASE_URL}/all`)
+        .then(res => res.json())
+        .then(resJson => this.setState({countries: resJson}))
+    }
 }

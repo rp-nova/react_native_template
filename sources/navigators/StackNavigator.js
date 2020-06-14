@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack'
 
-import Main from '../screens/Main'
+import Regions from '../screens/Regions'
+import Countries from '../screens/Countries'
 
 export default class extends Component {
 	Stack = createStackNavigator()
@@ -18,8 +19,13 @@ export default class extends Component {
 				}}
 			>
 				<Stack.Screen
-					component = {Main}
-					name = 'Main'
+					component = {Regions}
+					name = 'Regions'
+				/>
+
+				<Stack.Screen
+					component = {Countries}
+					name = 'Countries'
 				/>
 			</Stack.Navigator>
 		)
