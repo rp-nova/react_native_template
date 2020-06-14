@@ -6,6 +6,8 @@ import { DataContext } from '../refs/contexts'
 
 import { MAIN_COLOR } from '../refs/constants'
 
+import AntDesign from 'react-native-vector-icons/AntDesign'
+
 export default class extends Component {
     pickedRegion = this.props.route.params['pickedRegion']
 
@@ -31,12 +33,26 @@ export default class extends Component {
                 >
                     <View
                         style = {{
+                            alignItems: 'center',
                             backgroundColor: MAIN_COLOR,
+                            flexDirection: 'row',
                             height: 60,
-                            justifyContent: 'center',
                             paddingHorizontal: 20
                         }}
                     >
+                        <TouchableOpacity
+                            onPress = {() => this.props.navigation.goBack()}
+                            style = {{
+                                marginRight: 10
+                            }}
+                        >
+                            <AntDesign
+                                color = 'white'
+                                name = 'arrowleft'
+                                size = {30}
+                            />
+                        </TouchableOpacity>
+
                         <Text
                             style = {{
                                 color: 'white',
